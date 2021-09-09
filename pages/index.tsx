@@ -123,7 +123,7 @@ export default function Home({ initialUsers }) {
 					</FormControl>
 				</Flex>
 				<Button onClick={handleSubmit} mt="20px">
-					Test!
+					Add User
 				</Button>
 			</Box>
 
