@@ -32,11 +32,12 @@ export async function getServerSideProps() {
 
 export interface HomeProps {
 	initialUsers: User[];
-}
+};
 
 export default function Home(props: HomeProps) {
 	const { initialUsers } = props;
-	const [users, setUsers] = useState<User[]>(initialUsers);
+	const [users, setUsers] =
+		useState<User[]>(initialUsers);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -55,9 +56,9 @@ export default function Home(props: HomeProps) {
 		console.log(body);
 
 		const newUser = await fetcher<{ user: Prisma.UserCreateInput }, User>(
-			"/api/create",
-			{ user: body }
-		);
+            '/api/create',
+            { user: body }
+        );
 		setUsers([...users, newUser]);
 		setFirstName("");
 		setLastName("");
