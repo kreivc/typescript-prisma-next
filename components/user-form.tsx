@@ -77,7 +77,7 @@ function UserForm({ onCreateSuccess }: UserFormProps) {
                         onChange={(e) => setAvatar(e.target.value)}
                     />
                 </FormControl>
-                <FormControl id="eole" isRequired>
+                <FormControl id="role" isRequired>
                     <FormLabel>Role</FormLabel>
                     <Select
                         value={role}
