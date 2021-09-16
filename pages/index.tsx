@@ -24,8 +24,7 @@ import prisma from "../lib/prisma";
 import { fetcher } from "../utils/fetcher";
 
 export async function getServerSideProps() {
-	const users: Prisma.UserUncheckedCreateInput[] =
-		await prisma.user.findMany();
+	const users: Prisma.UserUncheckedCreateInput[] = await prisma.user.findMany();
 	return {
 		props: { initialUsers: users },
 	};
@@ -52,7 +51,7 @@ export default function Home({ initialUsers }) {
 		console.log(body);
 
 		await fetcher("/api/create", { user: body });
-		await setUsers([...users, body]);
+		setUsers([...users, body]);
 		setFirstName("");
 		setLastName("");
 		setAvatar("");
@@ -74,9 +73,7 @@ export default function Home({ initialUsers }) {
 			</Head>
 
 			<Box mt="20px" p="2%" w="100%">
-				<Heading as="h3">
-					This app is powered by NextJS, Chakra UI
-				</Heading>
+				<Heading as="h3">This app is powered by NextJS, Chakra UI</Heading>
 				<Flex as="form" gridGap={3} mt="30px">
 					<FormControl id="first-name" isRequired>
 						<FormLabel>First name</FormLabel>
@@ -112,10 +109,7 @@ export default function Home({ initialUsers }) {
 					</FormControl>
 					<FormControl id="eole" isRequired>
 						<FormLabel>Role</FormLabel>
-						<Select
-							value={role}
-							onChange={(e) => setRole(e.target.value)}
-						>
+						<Select value={role} onChange={(e) => setRole(e.target.value)}>
 							<option value="USER">USER</option>
 							<option value="ADMIN">ADMIN</option>
 							<option value="DEVELOPER">DEVELOPER</option>
