@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import {
 	Box,
 	Heading,
@@ -30,9 +30,13 @@ export async function getServerSideProps() {
 	};
 }
 
-export default function Home({ initialUsers }) {
-	const [users, setUsers] =
-		useState<Prisma.UserUncheckedCreateInput[]>(initialUsers);
+export interface HomeProps {
+	initialUsers: User[];
+}
+
+export default function Home(props: HomeProps) {
+	const { initialUsers } = props;
+	const [users, setUsers] = useState<User[]>(initialUsers);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -50,8 +54,11 @@ export default function Home({ initialUsers }) {
 
 		console.log(body);
 
-		await fetcher("/api/create", { user: body });
-		setUsers([...users, body]);
+		const newUser = await fetcher<{ user: Prisma.UserCreateInput }, User>(
+			"/api/create",
+			{ user: body }
+		);
+		setUsers([...users, newUser]);
 		setFirstName("");
 		setLastName("");
 		setAvatar("");
@@ -59,7 +66,7 @@ export default function Home({ initialUsers }) {
 		setEmail("");
 	};
 
-	const handleDelete = async (u) => {
+	const handleDelete = async (u: Prisma.UserUncheckedCreateInput) => {
 		await fetcher("/api/delete", { id: u.id });
 		await setUsers(users.filter((usr) => usr !== u));
 	};
